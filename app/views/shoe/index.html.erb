@@ -1,0 +1,20 @@
+
+<a href="user/<%= @user %>"> Dashboard </a>
+
+<a href='../session/<%= @user%>' data-confirm="Logout?" data-method="delete">Logout</a>
+
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+		<p><%= e %></p>
+	<% end %>
+<% end %>
+
+<h2> SHOES </h2>
+
+<% @shoes.each do |shoe| %>
+  <p> <%= shoe.name %> </p>
+  <p><%= shoe.user.first_name %> <%= shoe.user.last_name %></p>
+  <p> $<%= shoe.cost %> </p>
+  <p> <% shoe.created_at %> </p>
+  <a href='shoe/<%= shoe.id %>' data-confirm="Buy this Shoe?" data-method="patch">Buy Shoe</a>
+<% end %>

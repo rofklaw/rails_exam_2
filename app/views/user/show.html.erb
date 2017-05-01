@@ -1,0 +1,50 @@
+<h1> HELLO <%= @user.first_name %> </h1>
+
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+		<p><%= e %></p>
+	<% end %>
+<% end %>
+
+<a href='../session/<%= @user.id %>' data-confirm="Logout?" data-method="delete">Logout</a>
+
+
+<a href="/shoe">return to all products </a>
+
+  <h3> Sell a new Shoe </h3>
+
+<form action="/shoe" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  Name: <input type="text" name="name"></input>
+  Cost <input type="number" name="cost"></inut>
+  <input type="submit" value="Sell"></input>
+</form>
+
+<h3> shoes you are selling </h3>
+<%= @selling.each do |selling| %>
+  <p> <%= selling.name %> </p>
+  <p> <%= selling.cost %></p>
+  <p> <%= selling.created_at %></p>
+  <a href='../shoe/<%= selling.id %>' data-confirm="remove this shoe?" data-method="delete">Remove Shoe</a>
+<% end %>
+
+<h3> shoes you have sold </h3>
+<%= @sold.each do |selling| %>
+  <p> <%= selling.name %> </p>
+  <p> $ <%= selling.cost %></p>
+  <p> <%= selling.created_at %></p>
+<% end %>
+
+<h3> shoes you done and gone bought</h3>
+<% @shoes.each do |shoe| %>
+  <p> <%= shoe.shoe.name %> </p>
+  <p><%= shoe.shoe.user.first_name %> <%= shoe.shoe.user.last_name %></p>
+  <p> $<%= shoe.shoe.cost %> </p>
+  <p> <% shoe.shoe.created_at %> </p>
+<% end %>
+
+<% @shoes.each do |shoe| %>
+<% @total += shoe.shoe.cost %>
+<% end %>
+<h4> TOTAL MONEY </h4>
+<p> <%= @total %> </p>
